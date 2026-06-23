@@ -24,8 +24,8 @@ function CartDrawer({ cart, onClose, onChangeQty, onRemove, isOpen }) {
       {/* DRAWER */}
       {/* ✅ MODIFIÉ : slidable depuis le bas sur mobile, depuis la droite sur desktop */}
       <div className={`fixed z-50 shadow-2xl flex flex-col transition-transform duration-300 ease-out bg-white
-        md:top-0 md:right-0 md:h-full md:w-[380px] md:max-w-full
-        inset-x-0 bottom-0 max-h-[90vh] rounded-t-2xl md:rounded-none
+        md:top-0 md:right-0 md:h-full md:w-[380px] md:max-w-full md:left-auto
+        left-0 right-0 bottom-0 max-h-[90vh] md:max-h-full rounded-t-2xl md:rounded-none
         ${isOpen
           ? 'translate-x-0 translate-y-0 animate-slide-in-right'
           : 'md:translate-x-full md:translate-y-0 translate-x-0 translate-y-full'}`}>
