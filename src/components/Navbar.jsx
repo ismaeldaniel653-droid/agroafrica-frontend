@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { 
   ShoppingCart, User, Package, Leaf, 
-  Search, Menu, X, MapPin, Bell      // ✅ NOUVEAU : icônes mobile (Menu burger, recherche, MapPin, fermeture)
+  Search, Menu, X, MapPin, Bell, LogOut, ChevronDown
 } from 'lucide-react'
-import { useSelector, useDispatch } from 'react-redux'    // ✅ NOUVEAU : imports regroupés/lints propres
+import { useSelector, useDispatch } from 'react-redux'
 import { changeQty, removeFromCart } from '../store/cartSlice'
+import { logout } from '../store/authSlice'
 import { useNavigate } from 'react-router-dom'
 import CartDrawer from './CartDrawer'
 
@@ -134,27 +135,47 @@ function Navbar() {
               )}
             </button>
 
-            {/* ✅ NOUVEAU : AVATAR UTILISATEUR façon Facebook */}
-            <button
-              onClick={() => navigate('/profile')}
-              className="ml-1 relative"
-              title={userName}
-              aria-label="Mon compte"
-            >
-              {avatarUrl ? (
-                <img
-                  src={avatarUrl}
-                  alt={userName}
-                  className="w-9 h-9 rounded-full object-cover border-2 border-white/30 hover:border-amber-400 transition-all hover:scale-105"
-                />
-              ) : (
-                <div className="w-9 h-9 rounded-full bg-amber-400 text-[#0D1F2D] font-bold text-sm flex items-center justify-center border-2 border-white/30 hover:border-white transition-all hover:scale-105">
-                  {getInitials(userName)}
+            {/* ✅ NOUVEAU : DROPDOWN UTILISATEUR (Mon compte + Déconnexion) */}
+            <div className="relative ml-1 group">
+              <button
+                className="flex items-center gap-1 text-white hover:bg-white/10 rounded-lg px-2 py-1 transition"
+                title={userName}
+                aria-label="Mon compte"
+              >
+                {avatarUrl ? (
+                  <img
+                    src={avatarUrl}
+                    alt={userName}
+                    className="w-9 h-9 rounded-full object-cover border-2 border-white/30 group-hover:border-amber-400 transition-all"
+                  />
+                ) : (
+                  <div className="w-9 h-9 rounded-full bg-amber-400 text-[#0D1F2D] font-bold text-sm flex items-center justify-center border-2 border-white/30 group-hover:border-white transition-all">
+                    {getInitials(userName)}
+                  </div>
+                )}
+                <ChevronDown size={14} className="hidden md:block text-white/70 group-hover:text-white transition-colors" />
+              </button>
+
+              {/* Dropdown menu */}
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="p-3 border-b border-gray-100">
+                  <p className="text-sm font-bold text-[#1A2E25] truncate">{userName}</p>
+                  <p className="text-xs text-gray-500">{user?.email || ''}</p>
                 </div>
-              )}
-              {/* ✅ NOUVEAU : pastille en ligne (vert = connecté) */}
-              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#0C6B4E]" />
-            </button>
+                <button
+                  onClick={() => navigate('/profile')}
+                  className="w-full flex items-center gap-2 px-4 py-3 text-sm text-[#1A2E25] hover:bg-[#E8F0EB] transition text-left"
+                >
+                  <User size={16} /> Mon profil
+                </button>
+                <button
+                  onClick={() => { dispatch(logout()); navigate('/') }}
+                  className="w-full flex items-center gap-2 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition text-left rounded-b-xl"
+                >
+                  <LogOut size={16} /> Déconnexion
+                </button>
+              </div>
+            </div>
 
             {/* COMMANDES */}
             <button

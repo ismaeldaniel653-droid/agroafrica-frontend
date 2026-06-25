@@ -5,7 +5,7 @@ import { uploadAvatar, deleteAvatar } from '../api/authApi'
 import { updateProfile } from '../store/authSlice'
 
 // ✅ NOUVEAU : modal complète d'upload/recadrage de photo de profil style Facebook
-function AvatarUpload({ isOpen, onClose }) {
+function AvatarUpload({ isOpen, onClose, onSuccess }) {
   const dispatch = useDispatch()
   const user = useSelector(state => state.auth?.user)
 
