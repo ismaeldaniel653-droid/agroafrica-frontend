@@ -68,10 +68,10 @@ function Navbar() {
           {/* LOGO */}
           <div
             onClick={() => navigate('/')}
-            className="text-xl md:text-2xl font-extrabold text-white whitespace-nowrap cursor-pointer flex items-center gap-1.5 md:gap-2"
+            className="text-lg sm:text-xl md:text-2xl font-extrabold text-white whitespace-nowrap cursor-pointer flex items-center gap-1.5 md:gap-2"
           >
-            <Leaf size={22} className="text-amber-400 shrink-0" />
-            <span className="hidden xs:inline">Agro<span className="text-amber-400">Africa</span></span>
+            <Leaf size={20} className="text-amber-400 shrink-0 md:size-[22px]" />
+            <span>Agro<span className="text-amber-400">Africa</span></span>
           </div>
 
           {/* ============================================ */}
