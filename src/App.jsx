@@ -18,6 +18,14 @@ import Certification  from './pages/Certification'
 import AgroAfricaPay  from './pages/AgroAfricaPay'
 import Profile        from './pages/Profile'      // ✅ NOUVEAU : profil + photo upload
 import MyOrders       from './pages/MyOrders'
+import PaiementMobileMoney from './pages/PaiementMobileMoney'
+import APropos             from './pages/APropos'
+import DevenirVendeur      from './pages/DevenirVendeur'
+import GuideVendeur        from './pages/GuideVendeur'
+import Livraison           from './pages/Livraison'
+import Retours             from './pages/Retours'
+import ServiceClient       from './pages/ServiceClient'
+import Tarifs              from './pages/Tarifs'
 
 // Espace vendeur
 import Dashboard     from './pages/Dashboard'
@@ -72,9 +80,14 @@ function App() {
         <Route path="/pay"          element={<><Navbar /><AgroAfricaPay /></>} />
         <Route path="/profile"      element={<PublicLayout><Profile /></PublicLayout>} />
         <Route path="/my-orders"    element={<PublicLayout><MyOrders /></PublicLayout>} />
-
-        {/* ✅ NOUVEAU : page de modification du profil — pas de Footer (état d'édition) */}
-        {/* (déjà couverte par /profile ci-dessus, garde seulement la route) */}
+        <Route path="/paiement-mobile-money" element={<PublicLayout><PaiementMobileMoney /></PublicLayout>} />
+        <Route path="/a-propos"             element={<PublicLayout><APropos /></PublicLayout>} />
+        <Route path="/devenir-vendeur"      element={<PublicLayout><DevenirVendeur /></PublicLayout>} />
+        <Route path="/guide-vendeur"        element={<PublicLayout><GuideVendeur /></PublicLayout>} />
+        <Route path="/livraison"            element={<PublicLayout><Livraison /></PublicLayout>} />
+        <Route path="/retours"              element={<PublicLayout><Retours /></PublicLayout>} />
+        <Route path="/service-client"       element={<PublicLayout><ServiceClient /></PublicLayout>} />
+        <Route path="/tarifs"               element={<PublicLayout><Tarifs /></PublicLayout>} />
 
         {/* ════════ AUTHENTIFICATION — PLEIN ÉCRAN (sans Navbar/Footer) ════════ */}
         <Route path="/login" element={<Login />} />
