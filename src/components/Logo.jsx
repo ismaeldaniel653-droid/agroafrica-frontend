@@ -24,18 +24,7 @@ function Logo({ size = 'normal' }) {
     return () => mq.removeEventListener('change', onChange)
   }, [])
 
-  useEffect(() => {
-    // ✅ MODIFIÉ : 3 minutes → 5 minutes (moins distrayant)
-    const timer = setInterval(() => {
-      if (reducedMotion) return              // ✅ NOUVEAU : pas de rotation si l'utilisateur préfère réduire
-      setFading(true)
-      setTimeout(() => {
-        setCurrent(prev => (prev + 1) % LOGOS.length)
-        setFading(false)
-      }, 400)
-    }, 300000)
-    return () => clearInterval(timer)
-  }, [reducedMotion])
+  // ✅ SUPPRIMÉ : logo fixe — pas de changement automatique
 
   const logo     = LOGOS[current]
   const isSmall  = size === 'small'
