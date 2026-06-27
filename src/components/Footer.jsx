@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ArrowUp, Mail, CheckCircle, Send } from 'lucide-react'
 
 function Footer() {
@@ -92,24 +93,24 @@ function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <a href="/" className="block hover:text-[#7EDCB5] transition">
+                <Link to="/" className="block hover:text-[#7EDCB5] transition">
                   <i className="fas fa-store mr-2"></i>Tous les produits
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/livreurs" className="block hover:text-[#7EDCB5] transition">
+                <Link to="/livreurs" className="block hover:text-[#7EDCB5] transition">
                   <i className="fas fa-truck mr-2"></i>Livraison communautaire
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/certification" className="block hover:text-[#7EDCB5] transition">
+                <Link to="/certification" className="block hover:text-[#7EDCB5] transition">
                   <i className="fas fa-certificate mr-2"></i>Certification Blockchain
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/pay" className="block hover:text-[#7EDCB5] transition">
+                <Link to="/pay" className="block hover:text-[#7EDCB5] transition">
                   <i className="fas fa-wallet mr-2"></i>AgroAfrica Pay
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -122,44 +123,44 @@ function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <a
-                  href="/devenir-vendeur"
+                <Link
+                  to="/devenir-vendeur"
                   className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
                 >
                   <i className="fas fa-user-plus mr-2"></i>Devenir vendeur
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/guide-vendeur"
+                <Link
+                  to="/guide-vendeur"
                   className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
                 >
                   <i className="fas fa-book mr-2"></i>Guide vendeur
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/dashboard"
+                <Link
+                  to="/dashboard"
                   className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
                 >
                   <i className="fas fa-chart-line mr-2"></i>Tableau de bord
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/certification"
+                <Link
+                  to="/certification"
                   className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
                 >
                   <i className="fas fa-award mr-2"></i>Certification
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/tarifs"
+                <Link
+                  to="/tarifs"
                   className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
                 >
                   <i className="fas fa-tag mr-2"></i>Tarifs
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -172,44 +173,44 @@ function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <a
-                  href="/service-client"
+                <Link
+                  to="/service-client"
                   className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
                 >
                   <i className="fas fa-headset mr-2"></i>Service client
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/livraison"
+                <Link
+                  to="/livraison"
                   className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
                 >
                   <i className="fas fa-shipping-fast mr-2"></i>Livraison
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/retours"
+                <Link
+                  to="/retours"
                   className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
                 >
                   <i className="fas fa-undo mr-2"></i>Retours
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/paiement-mobile-money"
+                <Link
+                  to="/paiement-mobile-money"
                   className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
                 >
                   <i className="fas fa-mobile-alt mr-2"></i>Paiement Mobile Money
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/a-propos"
+                <Link
+                  to="/a-propos"
                   className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
                 >
                   <i className="fas fa-info-circle mr-2"></i>À propos
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
