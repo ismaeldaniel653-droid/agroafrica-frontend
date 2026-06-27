@@ -25,13 +25,8 @@ function Profile() {
     avatar: user?.avatar || null,
   })
 
-  // ✅ MODIFIÉ : recharger le profil depuis l'API au montage
-  useEffect(() => {
-    if (user?.token || localStorage.getItem('token')) {
-      dispatch(fetchProfile())
-    }
-  }, [dispatch])
-
+  // ✅ SUPPRIMÉ : fetchProfile causait une déconnexion automatique (401 interceptor)
+  // Le profil est déjà chargé par le thunk login/register
   useEffect(() => {
     setForm(prev => ({
       ...prev,
@@ -117,10 +112,6 @@ function Profile() {
                 📍 {[form.city, form.country].filter(Boolean).join(', ') || 'Non renseigné'}
               </p>
             </div>
-            <button onClick={() => editing ? handleSave() : setEditing(true)}
-              className="bg-white/20 hover:bg-white/30 text-white px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-2 flex-shrink-0">
-              {editing ? <><Save size={14} /> OK</> : <><Edit size={14} /> Modifier</>}
-            </button>
           </div>
         </div>
 
