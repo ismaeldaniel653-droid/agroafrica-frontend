@@ -141,11 +141,11 @@ function Checkout() {
                   <div>
                     <label className="text-xs font-semibold text-[#4A6355] mb-1 block">Téléphone</label>
                     <div className="flex gap-2">
-                      <select className="border border-[#DDE8E2] rounded-xl px-2 sm:px-3 py-3 text-xs sm:text-sm outline-none bg-white flex-shrink-0">
-                        <option>🇨🇲 +237</option>
-                        <option>🇸🇳 +221</option>
-                        <option>🇳🇬 +234</option>
-                        <option>🇬🇭 +233</option>
+                      <select name="countryCode" value={form.countryCode || '+237'} onChange={handleChange} className="border border-[#DDE8E2] rounded-xl px-2 sm:px-3 py-3 text-xs sm:text-sm outline-none bg-white flex-shrink-0">
+                        <option value="+237">🇨🇲 +237</option>
+                        <option value="+221">🇸🇳 +221</option>
+                        <option value="+234">🇳🇬 +234</option>
+                        <option value="+233">🇬🇭 +233</option>
                       </select>
                       <input
                         type="tel"

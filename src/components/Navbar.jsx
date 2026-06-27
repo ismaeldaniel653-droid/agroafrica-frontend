@@ -85,7 +85,7 @@ function Navbar() {
           {/* ============================================ */}
           {/* RECHERCHE DESKTOP    ✅ MODIFIÉ : caché sur mobile */}
           {/* ============================================ */}
-          <div className="hidden md:flex flex-1 rounded-lg overflow-hidden shadow-md">
+          <form onSubmit={(e) => { e.preventDefault(); if (search.trim()) navigate(`/?search=${encodeURIComponent(search.trim())}`) }} className="hidden md:flex flex-1 rounded-lg overflow-hidden shadow-md">
             <select className="bg-[#e8f0eb] border-none px-3 text-xs min-w-[110px] cursor-pointer outline-none">
               <option>Tout</option>
               <option>🌾 Agricole</option>
@@ -100,10 +100,10 @@ function Navbar() {
               onChange={e => setSearch(e.target.value)}
               className="flex-1 px-4 text-sm outline-none text-[#1A2E25] min-w-0"
             />
-            <button className="bg-amber-400 w-12 flex items-center justify-center text-lg hover:bg-amber-500 transition shrink-0">
+            <button type="submit" className="bg-amber-400 w-12 flex items-center justify-center text-lg hover:bg-amber-500 transition shrink-0">
               🔍
             </button>
-          </div>
+          </form>
 
           {/* ESPACEUR MOBILE */}
           <div className="flex-1 md:hidden" />
@@ -264,6 +264,8 @@ function Navbar() {
                 { icon: '🚚', label: 'Livreurs',         to: '/livreurs' },
                 { icon: '🛡️', label: 'Certification',   to: '/certification' },
                 { icon: '💳', label: 'AgroAfrica Pay',  to: '/pay' },
+                { icon: '🤝', label: 'Devenir vendeur', to: '/devenir-vendeur' },
+                { icon: '📞', label: 'Service client',  to: '/service-client' },
               ].map((l, i) => (
                 <button
                   key={i}

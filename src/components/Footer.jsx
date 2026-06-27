@@ -1,13 +1,12 @@
-import { useState } from 'react'    // ✅ NOUVEAU : import pour le formulaire newsletter
-import { ArrowUp, Mail, CheckCircle, Send } from 'lucide-react'    // ✅ NOUVEAU : icônes modernes
+import { useState } from 'react'
+import { ArrowUp, Mail, CheckCircle, Send } from 'lucide-react'
 
 function Footer() {
   const currentYear = new Date().getFullYear()
-  const updatedAt   = 'Janvier 2025'    // ✅ NOUVEAU : date de mise à jour pour transparence
+  const updatedAt = 'Janvier 2025'
 
-  // ✅ NOUVEAU : gestion locale du formulaire newsletter
   const [newsletterEmail, setNewsletterEmail] = useState('')
-  const [newsletterSent,  setNewsletterSent]  = useState(false)
+  const [newsletterSent, setNewsletterSent] = useState(false)
 
   const handleNewsletter = (e) => {
     e.preventDefault()
@@ -19,34 +18,33 @@ function Footer() {
     }, 3000)
   }
 
-  // ✅ NOUVEAU : remonte en haut de page
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
   return (
-    // ✅ NOUVEAU : safe-area pour iPhone X+
-    <footer className="bg-[#0D1F2D] text-white/60 pt-10 md:pt-12 pb-6" style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}>
+    <footer
+      className="bg-[#0D1F2D] text-white/60 pt-10 md:pt-12 pb-6"
+      style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
+    >
       <div className="max-w-[1300px] mx-auto px-4 md:px-5">
-
-        {/* =================================================== */}
-        {/* MAIN FOOTER CONTENT                                  */}
-        {/* ✅ MODIFIÉ : grid mobile devient stack vertical      */}
-        {/* =================================================== */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
-
           {/* BRAND */}
           <div className="col-span-1 sm:col-span-2 md:col-span-1 text-center md:text-left">
             <div className="text-2xl font-extrabold text-white mb-4 flex items-center justify-center md:justify-start gap-2">
               <span className="text-3xl">🌿</span>
-              <span>Agro<span className="text-amber-400">Africa</span></span>
+              <span>
+                Agro<span className="text-amber-400">Africa</span>
+              </span>
             </div>
             <p className="text-xs leading-relaxed max-w-[260px] md:max-w-[220px] mx-auto md:mx-0 mb-4">
-              Le premier grand marché africain de produits agricoles et artisanaux. Du producteur à l'acheteur, en toute transparence.
+              Le premier grand marché africain de produits agricoles et artisanaux. Du producteur à l'acheteur,
+              en toute transparence.
             </p>
+
             <div className="flex gap-2 justify-center md:justify-start">
-              {/* ✅ NOUVEAU : liens externes avec rel="noopener" pour la sécurité */}
               <a
                 href="https://facebook.com"
-                target="_blank" rel="noopener noreferrer"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-white/10 hover:bg-[#1877F2] hover:scale-110 w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all duration-300"
                 title="Facebook"
                 aria-label="Facebook"
@@ -55,7 +53,8 @@ function Footer() {
               </a>
               <a
                 href="https://instagram.com"
-                target="_blank" rel="noopener noreferrer"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-white/10 hover:bg-gradient-to-tr hover:from-[#FD1D1D] hover:to-[#405DE6] hover:scale-110 w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all duration-300"
                 title="Instagram"
                 aria-label="Instagram"
@@ -64,7 +63,8 @@ function Footer() {
               </a>
               <a
                 href="https://twitter.com"
-                target="_blank" rel="noopener noreferrer"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-white/10 hover:bg-[#1DA1F2] hover:scale-110 w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all duration-300"
                 title="Twitter / X"
                 aria-label="Twitter"
@@ -73,7 +73,8 @@ function Footer() {
               </a>
               <a
                 href="https://youtube.com"
-                target="_blank" rel="noopener noreferrer"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-white/10 hover:bg-[#FF0000] hover:scale-110 w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all duration-300"
                 title="YouTube"
                 aria-label="YouTube"
@@ -121,27 +122,42 @@ function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <a href="#" className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200">
+                <a
+                  href="/devenir-vendeur"
+                  className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
+                >
                   <i className="fas fa-user-plus mr-2"></i>Devenir vendeur
                 </a>
               </li>
               <li>
-                <a href="#" className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200">
+                <a
+                  href="/guide-vendeur"
+                  className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
+                >
                   <i className="fas fa-book mr-2"></i>Guide vendeur
                 </a>
               </li>
               <li>
-                <a href="/dashboard" className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200">
+                <a
+                  href="/dashboard"
+                  className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
+                >
                   <i className="fas fa-chart-line mr-2"></i>Tableau de bord
                 </a>
               </li>
               <li>
-                <a href="/certification" className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200">
+                <a
+                  href="/certification"
+                  className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
+                >
                   <i className="fas fa-award mr-2"></i>Certification
                 </a>
               </li>
               <li>
-                <a href="#" className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200">
+                <a
+                  href="/tarifs"
+                  className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
+                >
                   <i className="fas fa-tag mr-2"></i>Tarifs
                 </a>
               </li>
@@ -156,64 +172,69 @@ function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <a href="#" className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200">
+                <a
+                  href="/service-client"
+                  className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
+                >
                   <i className="fas fa-headset mr-2"></i>Service client
                 </a>
               </li>
               <li>
-                <a href="#" className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200">
+                <a
+                  href="/livraison"
+                  className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
+                >
                   <i className="fas fa-shipping-fast mr-2"></i>Livraison
                 </a>
               </li>
               <li>
-                <a href="#" className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200">
+                <a
+                  href="/retours"
+                  className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
+                >
                   <i className="fas fa-undo mr-2"></i>Retours
                 </a>
               </li>
               <li>
-                <a href="#" className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200">
+                <a
+                  href="/paiement-mobile-money"
+                  className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
+                >
                   <i className="fas fa-mobile-alt mr-2"></i>Paiement Mobile Money
                 </a>
               </li>
               <li>
-                <a href="#" className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200">
+                <a
+                  href="/a-propos"
+                  className="block hover:text-amber-400 hover:translate-x-1 transition-all duration-200"
+                >
                   <i className="fas fa-info-circle mr-2"></i>À propos
                 </a>
               </li>
             </ul>
           </div>
-
         </div>
 
-        {/* =================================================== */}
-        {/* NEWSLETTER                                            */}
-        {/* ✅ NOUVEAU : vrai formulaire avec feedback succès      */}
-        {/* =================================================== */}
+        {/* NEWSLETTER */}
         <div className="border-t border-white/10 pt-8 mb-8">
           <div className="max-w-md mx-auto text-center px-2">
             <h4 className="text-white font-bold mb-2 flex items-center justify-center gap-2">
               <Mail size={16} /> Restez informé
             </h4>
-            <p className="text-xs text-white/50 mb-4">
-              Recevez nos offres exclusives et actualités
-            </p>
+            <p className="text-xs text-white/50 mb-4">Recevez nos offres exclusives et actualités</p>
 
-            {/* ✅ NOUVEAU : formulaire fonctionnel */}
             {newsletterSent ? (
               <div className="flex items-center justify-center gap-2 bg-emerald-500/20 text-emerald-300 rounded-lg px-4 py-3 animate-fade-in">
                 <CheckCircle size={16} />
                 <span className="text-sm font-medium">Merci ! Vous êtes inscrit 🎉</span>
               </div>
             ) : (
-              <form
-                onSubmit={handleNewsletter}
-                className="flex flex-col sm:flex-row gap-2"
-              >
+              <form onSubmit={handleNewsletter} className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="email"
                   required
                   value={newsletterEmail}
-                  onChange={e => setNewsletterEmail(e.target.value)}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
                   placeholder="votre@email.com"
                   className="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-2.5 text-sm text-white placeholder-white/40 outline-none focus:border-amber-400 transition min-w-0"
                 />
@@ -229,42 +250,32 @@ function Footer() {
           </div>
         </div>
 
-        {/* =================================================== */}
-        {/* PAIEMENTS                                             */}
-        {/* ✅ NOUVEAU : grille responsive pour les logos          */}
-        {/* =================================================== */}
+        {/* PAIEMENTS */}
         <div className="border-t border-white/10 pt-6 mb-6">
-          <p className="text-center text-xs text-white/40 mb-4">
-            Moyens de paiement acceptés
-          </p>
+          <p className="text-center text-xs text-white/40 mb-4">Moyens de paiement acceptés</p>
           <div className="grid grid-cols-3 sm:flex sm:flex-wrap gap-2 justify-center max-w-md mx-auto">
             {[
-              { label:'MTN MoMo',     color:'#FFCC00', icon: 'fa-mtn' },
-              { label:'Orange Money', color:'#FF6600', icon: 'fa-orange' },
-              { label:'Wave',         color:'#1BA672', icon: 'fa-water' },
-              { label:'Visa',         color:'#1A1F71', icon: 'fa-cc-visa' },
-              { label:'PayPal',       color:'#003087', icon: 'fa-cc-paypal' },
-              { label:'Crypto',       color:'#F7931A', icon: 'fa-bitcoin' },
+              { label: 'MTN MoMo', color: '#FFCC00', icon: 'fa-mtn' },
+              { label: 'Orange Money', color: '#FF6600', icon: 'fa-orange' },
+              { label: 'Wave', color: '#1BA672', icon: 'fa-water' },
+              { label: 'Visa', color: '#1A1F71', icon: 'fa-cc-visa' },
+              { label: 'PayPal', color: '#003087', icon: 'fa-cc-paypal' },
+              { label: 'Crypto', color: '#F7931A', icon: 'fa-bitcoin' },
             ].map((p, i) => (
               <div
                 key={i}
                 className="flex items-center justify-center gap-1.5 bg-white/5 border border-white/10 rounded-lg px-2.5 py-2 text-[11px] sm:text-xs text-white font-medium hover:bg-white/10 transition cursor-pointer"
                 title={p.label}
               >
-                <i className={`fab ${p.icon}`} style={{color: p.color}}></i>
+                <i className={`fab ${p.icon}`} style={{ color: p.color }}></i>
                 <span className="truncate">{p.label}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* =================================================== */}
-        {/* BOTTOM                                                */}
-        {/* ✅ NOUVEAU : bouton "retour en haut" + date de maj     */}
-        {/* =================================================== */}
+        {/* BOTTOM */}
         <div className="border-t border-white/10 pt-6">
-
-          {/* ✅ NOUVEAU : bouton retour en haut */}
           <div className="text-center mb-4">
             <button
               onClick={scrollToTop}
@@ -278,27 +289,30 @@ function Footer() {
 
           <p className="text-center text-xs mb-2">
             © {currentYear}{' '}
-            <span className="text-amber-400 font-semibold">AgroAfrica</span>{' '}
-            — Fait avec <i className="fas fa-leaf text-green-500"></i> au Cameroun 🇨🇲
+            <span className="text-amber-400 font-semibold">AgroAfrica</span>{' '}— Fait avec{' '}
+            <i className="fas fa-leaf text-green-500"></i> au Cameroun 🇨🇲
           </p>
 
-          {/* ✅ NOUVEAU : date de mise à jour (transparence) */}
-          <p className="text-center text-[10px] text-white/30 mb-2">
-            Dernière mise à jour : {updatedAt}
-          </p>
+          <p className="text-center text-[10px] text-white/30 mb-2">Dernière mise à jour : {updatedAt}</p>
 
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-white/40 text-xs">
-            <a href="#" className="hover:text-white transition">Mentions légales</a>
+            <a href="#" className="hover:text-white transition">
+              Mentions légales
+            </a>
             <span className="hidden sm:inline">·</span>
-            <a href="#" className="hover:text-white transition">Confidentialité</a>
+            <a href="#" className="hover:text-white transition">
+              Confidentialité
+            </a>
             <span className="hidden sm:inline">·</span>
-            <a href="#" className="hover:text-white transition">CGU</a>
+            <a href="#" className="hover:text-white transition">
+              CGU
+            </a>
           </div>
         </div>
-
       </div>
     </footer>
   )
 }
 
 export default Footer
+

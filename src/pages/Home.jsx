@@ -7,27 +7,30 @@ import Categories from '../components/Categories'
 import ProductCard from '../components/ProductCard'
 import { getProducts } from '../api/productApi'
 
-// ✅ NOUVEAU : liste vide — les produits viennent uniquement de l'API
+// TODO: liste vide — les produits viennent uniquement de l'API
 const PRODUCTS = []
 
 function Home() {
   const navigate = useNavigate()
   const [activeCat, setActiveCat] = useState('all')
-  const [toast, setToast]         = useState(null)
+  const [toast, setToast] = useState(null)
   const dispatch = useDispatch()
-  // ✅ NOUVEAU : on initialise avec un tableau vide
-  const [products, setProducts]  = useState([])
+  // Initialisation avec un tableau vide pour éviter le flash
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetch = async () => {
+      setLoading(true)
       try {
         const res = await getProducts()
         const incoming = res?.products ?? res
         setProducts(Array.isArray(incoming) ? incoming : [])
       } catch (err) {
-        // ✅ NOUVEAU : on ne fallback plus sur des données fictives
         setProducts([])
         console.warn('API produits inaccessible — affichage état vide')
+      } finally {
+        setLoading(false)
       }
     }
     fetch()
@@ -56,16 +59,25 @@ function Home() {
           <div>
             <h3 className="text-white text-lg sm:text-xl font-extrabold mb-1">🎉 Offre de lancement AgroAfrica</h3>
             <p className="text-white/60 text-sm">Première commande : -15% sur tous les produits camerounais</p>
-            <span className="inline-block mt-2 bg-amber-400/15 border border-dashed border-amber-400/50 text-amber-400 font-mono font-bold px-4 py-1 rounded-lg text-sm">
+            <span className="inline-block mt-2 bg-amber-400/15 border border-dashed border-amber-400/50 text-amber-400 font-mono font-bold px-4 py-1 rounded-lg text-sm select-all">
               AGRO15CMR
             </span>
           </div>
           <button
-            onClick={() => navigate('/')}
-            // ✅ NOUVEAU : responsive w-full sur mobile
+            onClick={() => {
+              navigator.clipboard.writeText('AGRO15CMR')
+              // Créer un toast temporaire pour confirmer la copie
+              const toastEl = document.createElement('div')
+              toastEl.textContent = '✅ Code promo AGRO15CMR copié !'
+              toastEl.className = 'fixed bottom-20 left-1/2 -translate-x-1/2 bg-[#0C6B4E] text-white px-5 py-3 rounded-xl text-sm font-semibold shadow-lg z-[60] animate-fade-in sm:left-auto sm:right-6 sm:bottom-6'
+              document.body.appendChild(toastEl)
+              setTimeout(() => {
+                toastEl.remove()
+              }, 2000)
+            }}
             className="w-full sm:w-auto bg-amber-400 hover:bg-amber-500 text-[#0D1F2D] font-bold px-6 py-3 rounded-lg transition whitespace-nowrap"
           >
-            Profiter de l'offre →
+            Copier le code promo →
           </button>
         </div>
 
@@ -80,15 +92,34 @@ function Home() {
           </button>
         </div>
 
-        {/* ✅ NOUVEAU : état vide si aucun produit */}
-        {filtered.length === 0 ? (
+        {/* ÉTAT DE CHARGEMENT */}
+        {loading && (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+            {[...Array(10)].map((_, i) => (
+              <div key={i} className="bg-white border border-[#DDE8E2] rounded-2xl overflow-hidden animate-pulse">
+                <div className="h-40 bg-[#E8F0EB]" />
+                <div className="p-3 md:p-4 space-y-2">
+                  <div className="h-4 bg-[#E8F0EB] rounded w-3/4" />
+                  <div className="h-3 bg-[#E8F0EB] rounded w-1/2" />
+                  <div className="h-4 bg-[#E8F0EB] rounded w-1/3" />
+                  <div className="h-8 bg-[#E8F0EB] rounded w-full mt-2" />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ÉTAT VIDE */}
+        {!loading && filtered.length === 0 && (
           <div className="text-center py-16 bg-white rounded-2xl border border-[#DDE8E2]">
             <div className="text-5xl mb-3">🛒</div>
             <p className="font-bold text-[#1A2E25]">Aucun produit disponible pour le moment</p>
             <p className="text-sm text-[#8AADA0] mt-2">Revenez bientôt, de nouveaux produits arrivent chaque jour !</p>
           </div>
-        ) : (
-          // ✅ NOUVEAU : grille responsive — 2 colonnes mobile, 3 tablette, 5 PC
+        )}
+
+        {/* GRILLE PRODUITS */}
+        {!loading && filtered.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {filtered.map(p => (
               <ProductCard key={p.id || p._id} product={p} onAddToCart={handleAddToCart} />
@@ -100,7 +131,6 @@ function Home() {
 
       {/* TOAST */}
       {toast && (
-        // ✅ NOUVEAU : centré sur mobile, à droite sur PC
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-6 bg-[#0C6B4E] text-white px-5 py-3 rounded-xl text-sm font-semibold shadow-lg z-50 animate-bounce max-w-[90vw]">
           {toast}
         </div>
