@@ -200,9 +200,7 @@ function Navbar() {
             </div>
 
             {/* THÈME */}
-            <div className="hidden sm:block">
-              <ThemeToggle />
-            </div>
+            <ThemeToggle />
 
             <button
               onClick={() => navigate('/my-orders')}
