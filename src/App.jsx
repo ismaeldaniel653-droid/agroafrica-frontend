@@ -1,10 +1,13 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 
+import { ThemeProvider } from './contexts/ThemeContext'
+
 // Layout & composants globaux
 import Navbar        from './components/Navbar'
 import Footer        from './components/Footer'
 import OfflineNotice from './components/OfflineNotice'
+
 
 // Pages publiques
 import Home           from './pages/Home'
@@ -63,11 +66,13 @@ function PublicLayout({ children }) {
 /* ✅ NOUVEAU : détecteur de pages sans Footer (login, checkout, etc.) */
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <OfflineNotice />
+    <ThemeProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <OfflineNotice />
 
-      <Routes>
+        <Routes>
+
 
         {/* ════════ PUBLIQUES AVEC NAVBAR + FOOTER ════════ */}
         <Route path="/"             element={<PublicLayout><Home /></PublicLayout>} />
@@ -127,8 +132,10 @@ function App() {
         } />
 
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
+
 
 export default App

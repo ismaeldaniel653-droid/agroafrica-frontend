@@ -8,14 +8,64 @@
   padding: 0;
 }
 
+/* ═══════════════════════════════════════════
+   THÈMES (Light/Dark) — CSS variables
+   ═══════════════════════════════════════════ */
+:root {
+  /* Mode Clair */
+  --bg-primary: #FAF8F5;
+  --bg-secondary: #F0F5ED;
+  --bg-card: #FFFFFF;
+  --text-primary: #1A3A2A;
+  --text-secondary: #5A6B5A;
+  --accent-primary: #2D6A4F;
+  --accent-secondary: #D4A373;
+  --border-color: #D8E2D8;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] {
+  /* Mode Sombre */
+  --bg-primary: #0D1B14;
+  --bg-secondary: #1A2E24;
+  --bg-card: #1E2D24;
+  --text-primary: #F0EDE8;
+  --text-secondary: #A8B5A0;
+  --accent-primary: #40916C;
+  --accent-secondary: #E6A86E;
+  --border-color: #2A3D32;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+}
+
 body {
   font-family: 'Outfit', sans-serif;
-  background: #F5F7F5;
-  color: #1A2E25;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   /* ✅ NOUVEAU : -webkit-font-smoothing pour un rendu plus net sur tous les OS */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+.card {
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.btn-primary {
+  background-color: var(--accent-primary);
+  color: #FFFFFF;
+}
+
+.btn-primary:hover {
+  background-color: #1B4332;
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  background-color: #52B788;
+}
+
 
 /* ═══════════════════════════════════════════
    ANIMATIONS PERSONNALISÉES
