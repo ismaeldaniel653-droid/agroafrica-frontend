@@ -1,0 +1,28 @@
+========================================
+   AGROAFRICA FRONTEND TESTING
+========================================
+
+✅ HOME PAGE (/): 200
+❌ LOGIN PAGE (/login): 404
+❌ PRODUCTS PAGE (/products): 404
+❌ A PROPOS (/a-propos): 404
+❌ DEVENIR VENDEUR (/devenir-vendeur): 404
+❌ GUIDE VENDEUR (/guide-vendeur): 404
+❌ LIVRAISON (/livraison): 404
+❌ RETOURS (/retours): 404
+❌ SERVICE CLIENT (/service-client): 404
+❌ TARIFS (/tarifs): 404
+❌ CERTIFICATION (/certification): 404
+❌ PAIEMENT MOBILE (/paiement-mobile-money): 404
+❌ REGISTER (/register): 404
+❌ PROFILE (/profile): 404
+❌ CHECKOUT (/checkout): 404
+❌ MY ORDERS (/my-orders): 404
+❌ DASHBOARD (/dashboard): 404
+❌ ADD PRODUCT (/add-product): 404
+❌ ADMIN (/admin): 404
+❌ 404 TEST (/nonexistent-test-404): 404
+
+========================================
+   FRONTEND TESTING COMPLETE
+========================================

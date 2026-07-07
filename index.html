@@ -1,64 +1,112 @@
 <!doctype html>
 <html lang="fr-FR">
   <head>
+    <!-- ═══════════════════════════════════════════
+         MÉTA DE BASE
+         ═══════════════════════════════════════════ -->
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0C6B4E" />
+    <meta name="color-scheme" content="light dark" />
+    
+    <!-- ═══════════════════════════════════════════
+         ICÔNES
+         ═══════════════════════════════════════════ -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/icon-192.png" />  <!-- ✅ NOUVEAU : iOS home screen -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />    <!-- ✅ MODIFIÉ -->
-    <meta name="theme-color" content="#0C6B4E" />         <!-- ✅ NOUVEAU : couleur barre mobile -->
-    <meta name="color-scheme" content="light" />         <!-- ✅ NOUVEAU -->
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- ═══════════════════════════════════════════
+         CACHE
+         ═══════════════════════════════════════════ -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="description" content="AgroAfrica — Plateforme N°1 du marché agricole et artisanal africain. Achetez directement auprès des producteurs dans 28 pays. Paiement Mobile Money." />  <!-- ✅ NOUVEAU : SEO -->
-    <meta name="keywords" content="agroafrica, marché africain, agriculture, artisanat, cacao, café, mobile money" />  <!-- ✅ NOUVEAU : SEO -->
-    <meta name="author" content="AgroAfrica" />          <!-- ✅ NOUVEAU -->
 
-    <!-- ✅ MODIFIÉ : OpenGraph pour partage WhatsApp/Facebook/LinkedIn -->
-    <meta property="og:type"        content="website" />
-    <meta property="og:url"         content="https://agroafrica-frontend.vercel.app/" />
-    <meta property="og:title"       content="AgroAfrica — Le Grand Marché Agricole Africain" />
-    <meta property="og:description" content="Achetez directement auprès d'agriculteurs et artisans africains. Paiement Mobile Money, livraison dans 28 pays." />
-    <meta property="og:image"       content="https://agroafrica-frontend.vercel.app/og-image.png" />
-    <meta property="og:locale"      content="fr_FR" />
-    <meta property="og:site_name"   content="AgroAfrica" />
-
-    <!-- ✅ NOUVEAU : Twitter Cards -->
-    <meta name="twitter:card"        content="summary_large_image" />
-    <meta name="twitter:title"       content="AgroAfrica — Marché Agricole Africain" />
-    <meta name="twitter:description" content="Achetez directement auprès des producteurs africains. Mobile Money, livraison 28 pays." />
-    <meta name="twitter:image"       content="https://agroafrica-frontend.vercel.app/og-image.png" />
-
-    <!-- Canonical -->
+    <!-- ═══════════════════════════════════════════
+         SEO
+         ═══════════════════════════════════════════ -->
+    <meta name="description" content="AgroAfrica — Plateforme N°1 du marché agricole et artisanal africain. Achetez directement auprès des producteurs dans 28 pays. Paiement Mobile Money." />
+    <meta name="keywords" content="agroafrica, marché africain, agriculture, artisanat, cacao, café, mobile money, commerce équitable, produits africains" />
+    <meta name="author" content="AgroAfrica" />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://agroafrica-frontend.vercel.app/" />
 
-    <title>AgroAfrica — Le Grand Marché Agricole & Artisanal Africain 🌍</title>  <!-- ✅ MODIFIÉ : faute corrigée + emoji -->
+    <!-- ═══════════════════════════════════════════
+         OPEN GRAPH (Facebook, WhatsApp, LinkedIn)
+         ═══════════════════════════════════════════ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://agroafrica-frontend.vercel.app/" />
+    <meta property="og:title" content="AgroAfrica — Le Grand Marché Agricole & Artisanal Africain 🌍" />
+    <meta property="og:description" content="Achetez directement auprès d'agriculteurs et artisans africains. Paiement Mobile Money, livraison dans 28 pays." />
+    <meta property="og:image" content="https://agroafrica-frontend.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="AgroAfrica" />
 
-    <!-- ✅ MODIFIÉ : 1 seule requête Google Fonts (au lieu de 2) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap"
-    />
+    <!-- ═══════════════════════════════════════════
+         TWITTER CARDS
+         ═══════════════════════════════════════════ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@AgroAfrica" />
+    <meta name="twitter:title" content="AgroAfrica — Marché Agricole Africain" />
+    <meta name="twitter:description" content="Achetez directement auprès des producteurs africains. Mobile Money, livraison 28 pays." />
+    <meta name="twitter:image" content="https://agroafrica-frontend.vercel.app/og-image.png" />
 
-    <!-- ✅ SUPPRIMÉ : 5 fonts secondaires non-essentielles (Bebas Neue, Righteous, Yeseva One, Abril Fatface) -->
-    <!-- ✅ SUPPRIMÉ : FontAwesome CDN — on utilise Lucide React (déjà installé) -->
+    <!-- ═══════════════════════════════════════════
+         FAVICON SUPPLEMENTAIRE (Android Chrome)
+         ═══════════════════════════════════════════ -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
 
-    <!-- ✅ NOUVEAU : Hint preconnect vers le backend -->
+    <!-- ═══════════════════════════════════════════
+         PRELOAD / PRECONNECT
+         ═══════════════════════════════════════════ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://agroafrica-backend.onrender.com" crossorigin />
     <link rel="dns-prefetch" href="https://agroafrica-backend.onrender.com" />
+
+    <!-- ═══════════════════════════════════════════
+         GOOGLE FONTS
+         ═══════════════════════════════════════════ -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap"
+    />
+
+    <!-- ═══════════════════════════════════════════
+         TITLE
+         ═══════════════════════════════════════════ -->
+    <title>AgroAfrica — Le Grand Marché Agricole & Artisanal Africain 🌍</title>
   </head>
   <body>
+    <!-- ═══════════════════════════════════════════
+         ROOT
+         ═══════════════════════════════════════════ -->
     <div id="root"></div>
-    <!-- ✅ NOUVEAU : noscript fallback pour utilisateurs sans JS -->
+
+    <!-- ═══════════════════════════════════════════
+         NOSCRIPT FALLBACK
+         ═══════════════════════════════════════════ -->
     <noscript>
-      <div style="padding:2rem;text-align:center;font-family:sans-serif">
-        <h1>🌿 AgroAfrica</h1>
-        <p>Cette application nécessite JavaScript pour fonctionner.<br>
-        Activez JavaScript ou utilisez un navigateur moderne.</p>
+      <div style="padding:2rem;text-align:center;font-family:sans-serif;background:#FAF8F5;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;">
+        <div style="font-size:4rem;margin-bottom:1rem;">🌿</div>
+        <h1 style="color:#1A3A2A;font-size:1.5rem;margin-bottom:0.5rem;">AgroAfrica</h1>
+        <p style="color:#5A6B5A;max-width:400px;margin:0 auto;">
+          Cette application nécessite JavaScript pour fonctionner.<br />
+          Activez JavaScript ou utilisez un navigateur moderne.
+        </p>
+        <a href="/" style="display:inline-block;margin-top:1.5rem;padding:0.75rem 2rem;background:#2D6A4F;color:white;border-radius:12px;text-decoration:none;font-weight:600;">
+          Recharger la page
+        </a>
       </div>
     </noscript>
+
+    <!-- ═══════════════════════════════════════════
+         SCRIPT
+         ═══════════════════════════════════════════ -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

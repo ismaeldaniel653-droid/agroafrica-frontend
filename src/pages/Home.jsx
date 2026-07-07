@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { addToCart } from '../store/cartSlice'
 import { useNavigate } from 'react-router-dom'
@@ -6,87 +6,124 @@ import Hero from '../components/Hero'
 import Categories from '../components/Categories'
 import ProductCard from '../components/ProductCard'
 import { getProducts } from '../api/productApi'
+import { Loader, ShoppingBag, ChevronRight, Sparkles } from 'lucide-react'
 
-// TODO: liste vide — les produits viennent uniquement de l'API
-const PRODUCTS = []
-
-function Home() {
+function Home({ 
+  className = '',
+  initialCategory = 'all',
+  showPromo = true,
+}) {
   const navigate = useNavigate()
-  const [activeCat, setActiveCat] = useState('all')
-  const [toast, setToast] = useState(null)
   const dispatch = useDispatch()
-  // Initialisation avec un tableau vide pour éviter le flash
+  
+  const [activeCat, setActiveCat] = useState(initialCategory)
+  const [toast, setToast] = useState(null)
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [copyToast, setCopyToast] = useState(false)
 
-  useEffect(() => {
-    const fetch = async () => {
-      setLoading(true)
-      try {
-        const res = await getProducts()
-        const incoming = res?.products ?? res
-        setProducts(Array.isArray(incoming) ? incoming : [])
-      } catch (err) {
-        setProducts([])
-        console.warn('API produits inaccessible — affichage état vide')
-      } finally {
-        setLoading(false)
-      }
+  // ✅ Chargement des produits
+  const fetchProducts = useCallback(async () => {
+    setLoading(true)
+    setError(null)
+    try {
+      const res = await getProducts()
+      const incoming = res?.products ?? res ?? []
+      setProducts(Array.isArray(incoming) ? incoming : [])
+    } catch (err) {
+      setError(err?.response?.data?.message || 'Impossible de charger les produits')
+      setProducts([])
+    } finally {
+      setLoading(false)
     }
-    fetch()
   }, [])
 
-  const filtered = activeCat === 'all'
-    ? products
-    : products.filter(p => p.cat === activeCat)
+  useEffect(() => {
+    fetchProducts()
+  }, [fetchProducts])
 
-  function handleAddToCart(product) {
+  // ✅ Filtrage des produits
+  const filtered = useMemo(() => {
+    if (activeCat === 'all') return products
+    return products.filter(p => (p.cat || p.category) === activeCat)
+  }, [products, activeCat])
+
+  // ✅ Gestion du panier
+  const handleAddToCart = useCallback((product) => {
     dispatch(addToCart(product))
-    setToast(`✅ ${product.name} ajouté !`)
-    setTimeout(() => setToast(null), 2500)
-  }
+    setToast(`✅ ${product.name || 'Produit'} ajouté au panier !`)
+    setTimeout(() => setToast(null), 3000)
+  }, [dispatch])
+
+  // ✅ Copie du code promo
+  const handleCopyPromo = useCallback(() => {
+    const promoCode = 'AGRO15CMR'
+    navigator.clipboard?.writeText(promoCode)
+    setCopyToast(true)
+    setTimeout(() => setCopyToast(false), 2000)
+  }, [])
+
+  // ✅ Nombre de produits
+  const productCount = useMemo(() => filtered.length, [filtered])
 
   return (
-    <div>
+    <div className={`${className}`}>
       <Hero />
 
       <div className="max-w-[1300px] mx-auto px-4 sm:px-5 pb-12">
-
-        <Categories activeCat={activeCat} setActiveCat={setActiveCat} />
+        {/* Catégories */}
+        <Categories 
+          activeCat={activeCat} 
+          setActiveCat={setActiveCat}
+          showCounts={true}
+        />
 
         {/* PROMO */}
-        <div className="bg-gradient-to-r from-[#0D1F2D] to-[#1A3A52] rounded-2xl p-5 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-8">
-          <div>
-            <h3 className="text-white text-lg sm:text-xl font-extrabold mb-1">🎉 Offre de lancement AgroAfrica</h3>
-            <p className="text-white/60 text-sm">Première commande : -15% sur tous les produits camerounais</p>
-            <span className="inline-block mt-2 bg-amber-400/15 border border-dashed border-amber-400/50 text-amber-400 font-mono font-bold px-4 py-1 rounded-lg text-sm select-all">
-              AGRO15CMR
-            </span>
+        {showPromo && (
+          <div className="bg-gradient-to-r from-[var(--bg-nav)] to-[var(--bg-nav)]/90 rounded-2xl p-5 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 mb-8 border border-[var(--border-color)]">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <Sparkles size={18} className="text-amber-400" />
+                <h3 className="text-[var(--text-light)] text-lg sm:text-xl font-extrabold">
+                  🎉 Offre de lancement AgroAfrica
+                </h3>
+              </div>
+              <p className="text-[var(--text-light)]/60 text-sm">
+                Première commande : <span className="text-amber-400 font-semibold">-15%</span> sur tous les produits camerounais
+              </p>
+              <div className="mt-2 flex items-center gap-2 flex-wrap">
+                <span className="inline-block bg-amber-400/15 border border-dashed border-amber-400/50 text-amber-400 font-mono font-bold px-4 py-1 rounded-lg text-sm select-all">
+                  AGRO15CMR
+                </span>
+                <button
+                  onClick={handleCopyPromo}
+                  className="text-xs text-amber-400 hover:text-amber-300 transition font-medium"
+                >
+                  {copyToast ? '✅ Copié !' : '📋 Copier'}
+                </button>
+              </div>
+            </div>
+            <button
+              onClick={() => navigate('/products')}
+              className="w-full sm:w-auto bg-amber-400 hover:bg-amber-500 text-[var(--text-primary)] font-bold px-6 py-3 rounded-xl transition active:scale-[0.98] flex items-center justify-center gap-2"
+            >
+              Découvrir les offres <ChevronRight size={16} />
+            </button>
           </div>
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText('AGRO15CMR')
-              // Créer un toast temporaire pour confirmer la copie
-              const toastEl = document.createElement('div')
-              toastEl.textContent = '✅ Code promo AGRO15CMR copié !'
-              toastEl.className = 'fixed bottom-20 left-1/2 -translate-x-1/2 bg-[#0C6B4E] text-white px-5 py-3 rounded-xl text-sm font-semibold shadow-lg z-[60] animate-fade-in sm:left-auto sm:right-6 sm:bottom-6'
-              document.body.appendChild(toastEl)
-              setTimeout(() => {
-                toastEl.remove()
-              }, 2000)
-            }}
-            className="w-full sm:w-auto bg-amber-400 hover:bg-amber-500 text-[#0D1F2D] font-bold px-6 py-3 rounded-lg transition whitespace-nowrap"
-          >
-            Copier le code promo →
-          </button>
-        </div>
+        )}
 
         {/* TITRE */}
-        <div className="flex items-center justify-between mb-4 pb-2 border-b-2 border-[#E8F7F1]">
-          <h2 className="text-base sm:text-lg font-bold">⭐ Produits Vedettes</h2>
+        <div className="flex items-center justify-between mb-4 pb-2 border-b-2 border-[var(--border-color)]">
+          <h2 className="text-base sm:text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <span className="text-xl">⭐</span> Produits Vedettes
+            <span className="text-xs font-normal text-[var(--text-secondary)] ml-2">
+              ({productCount} produit{productCount > 1 ? 's' : ''})
+            </span>
+          </h2>
           <button
             onClick={() => setActiveCat('all')}
-            className="text-xs sm:text-sm text-[#0C6B4E] font-semibold border border-[#0C6B4E] px-3 sm:px-4 py-1.5 rounded-lg hover:bg-[#0C6B4E] hover:text-white transition"
+            className="text-xs sm:text-sm text-[var(--accent-primary)] font-semibold border border-[var(--accent-primary)] px-3 sm:px-4 py-1.5 rounded-lg hover:bg-[var(--accent-primary)] hover:text-[var(--text-light)] transition"
           >
             Voir tout →
           </button>
@@ -95,43 +132,89 @@ function Home() {
         {/* ÉTAT DE CHARGEMENT */}
         {loading && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-            {[...Array(10)].map((_, i) => (
-              <div key={i} className="bg-white border border-[#DDE8E2] rounded-2xl overflow-hidden animate-pulse">
-                <div className="h-40 bg-[#E8F0EB]" />
+            {[...Array(10)].map((_, index) => (
+              <div key={index} className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl overflow-hidden animate-pulse">
+                <div className="h-40 bg-[var(--bg-secondary)]" />
                 <div className="p-3 md:p-4 space-y-2">
-                  <div className="h-4 bg-[#E8F0EB] rounded w-3/4" />
-                  <div className="h-3 bg-[#E8F0EB] rounded w-1/2" />
-                  <div className="h-4 bg-[#E8F0EB] rounded w-1/3" />
-                  <div className="h-8 bg-[#E8F0EB] rounded w-full mt-2" />
+                  <div className="h-4 bg-[var(--bg-secondary)] rounded w-3/4" />
+                  <div className="h-3 bg-[var(--bg-secondary)] rounded w-1/2" />
+                  <div className="h-4 bg-[var(--bg-secondary)] rounded w-1/3" />
+                  <div className="h-8 bg-[var(--bg-secondary)] rounded w-full mt-2" />
                 </div>
               </div>
             ))}
           </div>
         )}
 
+        {/* ERREUR */}
+        {error && !loading && (
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-6 text-center">
+            <div className="text-4xl mb-3">⚠️</div>
+            <p className="font-bold text-red-700 dark:text-red-400">Erreur de chargement</p>
+            <p className="text-sm text-red-600 dark:text-red-300 mt-1">{error}</p>
+            <button
+              onClick={fetchProducts}
+              className="mt-4 bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-xl text-sm font-semibold transition"
+            >
+              Réessayer
+            </button>
+          </div>
+        )}
+
         {/* ÉTAT VIDE */}
-        {!loading && filtered.length === 0 && (
-          <div className="text-center py-16 bg-white rounded-2xl border border-[#DDE8E2]">
+        {!loading && !error && filtered.length === 0 && (
+          <div className="text-center py-16 bg-[var(--bg-card)] rounded-2xl border border-[var(--border-color)]">
             <div className="text-5xl mb-3">🛒</div>
-            <p className="font-bold text-[#1A2E25]">Aucun produit disponible pour le moment</p>
-            <p className="text-sm text-[#8AADA0] mt-2">Revenez bientôt, de nouveaux produits arrivent chaque jour !</p>
+            <p className="font-bold text-[var(--text-primary)]">Aucun produit disponible</p>
+            <p className="text-sm text-[var(--text-secondary)] mt-2">
+              {products.length === 0 
+                ? 'Revenez bientôt, de nouveaux produits arrivent chaque jour !'
+                : 'Aucun produit dans cette catégorie.'
+              }
+            </p>
+            {activeCat !== 'all' && (
+              <button
+                onClick={() => setActiveCat('all')}
+                className="mt-4 text-[var(--accent-primary)] font-semibold hover:underline text-sm"
+              >
+                Voir tous les produits →
+              </button>
+            )}
           </div>
         )}
 
         {/* GRILLE PRODUITS */}
-        {!loading && filtered.length > 0 && (
+        {!loading && !error && filtered.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-            {filtered.map(p => (
-              <ProductCard key={p.id || p._id} product={p} onAddToCart={handleAddToCart} />
+            {filtered.map((product) => (
+              <ProductCard 
+                key={product.id || product._id} 
+                product={product} 
+                onAddToCart={handleAddToCart}
+                size="normal"
+              />
             ))}
           </div>
         )}
 
+        {/* BOUTON CHARGER PLUS */}
+        {!loading && !error && filtered.length > 10 && (
+          <div className="text-center mt-8">
+            <button
+              onClick={() => {/* Implémenter la pagination */}}
+              className="text-[var(--accent-primary)] font-semibold hover:underline text-sm flex items-center justify-center gap-2 mx-auto"
+            >
+              <Loader size={14} className="animate-spin" />
+              Charger plus de produits
+            </button>
+          </div>
+        )}
       </div>
 
       {/* TOAST */}
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-6 bg-[#0C6B4E] text-white px-5 py-3 rounded-xl text-sm font-semibold shadow-lg z-50 animate-bounce max-w-[90vw]">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-6 bg-[var(--accent-primary)] text-[var(--text-light)] px-5 py-3 rounded-xl text-sm font-semibold shadow-lg z-50 animate-fade-in max-w-[90vw] flex items-center gap-2">
+          <ShoppingBag size={16} />
           {toast}
         </div>
       )}

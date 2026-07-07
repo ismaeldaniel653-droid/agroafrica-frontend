@@ -3,28 +3,39 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "description": "AgroAfrica — Le Grand Marché Agricole & Artisanal Africain",
+  "author": "AgroAfrica Team",
+  "license": "MIT",
   "engines": {
-    "node": "24.x"
+    "node": ">=18.x",
+    "npm": ">=9.x"
   },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"src/**/*.{js,jsx}\"",
-    "check": "npm run lint && npm run build"
+    "preview:prod": "vite preview --mode production",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext js,jsx --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,css}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,css}\"",
+    "check": "npm run lint && npm run build",
+    "clean": "rm -rf dist node_modules/.vite",
+    "seed": "node scripts/seedDatabase.js",
+    "seed:local": "API_BASE_URL=http://localhost:5000/api node scripts/seedDatabase.js",
+    "preview:vercel": "vercel --prod",
+    "deploy": "npm run build && npm run preview:vercel",
+    "analyze": "vite build --mode analyze"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.7",
-    "express-rate-limit": "^8.5.2",
     "lucide-react": "^0.460.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-redux": "^9.1.2",
     "react-router-dom": "^6.27.0",
-    "vite-plugin-pwa": "^0.20.5"
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
@@ -43,5 +54,39 @@
     "vercel": "^35.2.1",
     "vite": "^5.4.8",
     "vite-plugin-pwa": "^0.20.5"
-  }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "volta": {
+    "node": "20.11.0",
+    "npm": "10.2.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ismaeldaniel653-droid/agroafrica-frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ismaeldaniel653-droid/agroafrica-frontend/issues"
+  },
+  "homepage": "https://agroafrica-frontend.vercel.app",
+  "keywords": [
+    "agroafrica",
+    "agriculture",
+    "artisanat",
+    "e-commerce",
+    "africa",
+    "mobile-money",
+    "react",
+    "vite"
+  ]
 }

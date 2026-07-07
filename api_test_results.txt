@@ -1,0 +1,7 @@
+=== API TEST ===
+1. GET /api/products: 200 {"products":[],"total":0,"page":1,"pages":0}
+2. LOGIN test: 401 {"message":"❌ Identifiants incorrects"}
+3. LOGIN admin: 401 {"message":"❌ Identifiants incorrects"}
+4. 404: 404 {"message":"❌ Route introuvable"}
+5. NO AUTH: 401 {"message":"❌ Non autorisé, token requis"}
+=== DONE ===

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════ */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -16,12 +19,20 @@
   --bg-primary: #FAF8F5;
   --bg-secondary: #F0F5ED;
   --bg-card: #FFFFFF;
+  --bg-nav: #1A3A2A;
   --text-primary: #1A3A2A;
   --text-secondary: #5A6B5A;
+  --text-light: #FFFFFF;
   --accent-primary: #2D6A4F;
   --accent-secondary: #D4A373;
   --border-color: #D8E2D8;
   --shadow-color: rgba(0, 0, 0, 0.08);
+  --badge-bg: #E8F0FE;
+  --badge-text: #2D6A4F;
+  --success-color: #2D7A45;
+  --error-color: #D95030;
+  --warning-color: #F0A500;
+  --radius: 12px;
 }
 
 [data-theme="dark"] {
@@ -29,33 +40,65 @@
   --bg-primary: #0D1B14;
   --bg-secondary: #1A2E24;
   --bg-card: #1E2D24;
+  --bg-nav: #0A1510;
   --text-primary: #F0EDE8;
   --text-secondary: #A8B5A0;
+  --text-light: #F0EDE8;
   --accent-primary: #40916C;
   --accent-secondary: #E6A86E;
   --border-color: #2A3D32;
   --shadow-color: rgba(0, 0, 0, 0.4);
+  --badge-bg: #1A3A2A;
+  --badge-text: #A8B5A0;
+  --success-color: #52B788;
+  --error-color: #E66A4A;
+  --warning-color: #E6A86E;
 }
 
+/* ═══════════════════════════════════════════
+   BODY & TYPOGRAPHIE
+   ═══════════════════════════════════════════ */
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg-primary);
   color: var(--text-primary);
-  /* ✅ NOUVEAU : -webkit-font-smoothing pour un rendu plus net sur tous les OS */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s ease, color 0.3s ease;
+  line-height: 1.6;
 }
 
+/* ═══════════════════════════════════════════
+   CLASSES UTILITAIRES THÈME
+   ═══════════════════════════════════════════ */
+.bg-primary { background-color: var(--bg-primary); }
+.bg-secondary { background-color: var(--bg-secondary); }
+.bg-card { background-color: var(--bg-card); }
+.bg-nav { background-color: var(--bg-nav); }
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-light { color: var(--text-light); }
+.accent-primary { color: var(--accent-primary); }
+.accent-secondary { color: var(--accent-secondary); }
+.border-primary { border-color: var(--border-color); }
+.shadow-theme { box-shadow: 0 4px 12px var(--shadow-color); }
+
+/* ═══════════════════════════════════════════
+   COMPOSANTS PRINCIPAUX
+   ═══════════════════════════════════════════ */
 .card {
   background-color: var(--bg-card);
   border-color: var(--border-color);
   box-shadow: 0 4px 12px var(--shadow-color);
+  border-radius: var(--radius);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-primary {
   background-color: var(--accent-primary);
-  color: #FFFFFF;
+  color: var(--text-light);
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
@@ -66,6 +109,16 @@ body {
   background-color: #52B788;
 }
 
+.btn-secondary {
+  background-color: var(--accent-secondary);
+  color: var(--text-primary);
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  opacity: 0.85;
+}
 
 /* ═══════════════════════════════════════════
    ANIMATIONS PERSONNALISÉES
@@ -81,6 +134,16 @@ body {
   animation: fade-in 0.5s ease-out forwards;
 }
 
+/* Fade In rapide */
+@keyframes fade-in-fast {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-fast {
+  animation: fade-in-fast 0.2s ease-out forwards;
+}
+
 /* Slide In Right (Cart Drawer) */
 @keyframes slide-in-right {
   from { transform: translateX(100%); }
@@ -91,10 +154,36 @@ body {
   animation: slide-in-right 0.3s ease-out forwards;
 }
 
+/* Slide In Left */
+@keyframes slide-in-left {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.3s ease-out forwards;
+}
+
+/* Slide In Bottom (mobile drawer) */
+@keyframes slide-in-bottom {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.animate-slide-in-bottom {
+  animation: slide-in-bottom 0.3s ease-out forwards;
+}
+
 /* Shimmer (Login header) */
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
   100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-card) 50%, var(--bg-secondary) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
 }
 
 /* Hover Lift */
@@ -104,7 +193,7 @@ body {
 
 .hover-lift:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 24px var(--shadow-color);
 }
 
 /* Pulse glow */
@@ -123,11 +212,11 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.page-enter {
+.animate-page-enter {
   animation: page-enter 0.3s ease-out forwards;
 }
 
-/* ✅ NOUVEAU : transition douce pour changement d'avatar (effet "pop" façon Facebook) */
+/* Avatar Pop (effet "pop" façon Facebook) */
 @keyframes avatar-pop {
   0%   { transform: scale(0.85); opacity: 0; }
   60%  { transform: scale(1.05); }
@@ -137,15 +226,52 @@ body {
   animation: avatar-pop 0.35s ease-out forwards;
 }
 
-/* ✅ NOUVEAU : spin lent pour loader de l'image pendant upload */
-@keyframes avatar-upload-spin {
+/* Spin lent pour loader */
+@keyframes spin-slow {
   to { transform: rotate(360deg); }
 }
-.animate-avatar-upload-spin {
-  animation: avatar-upload-spin 1s linear infinite;
+.animate-spin-slow {
+  animation: spin-slow 1s linear infinite;
 }
 
-/* Line clamp utility */
+/* Spin plus rapide pour upload */
+@keyframes upload-spin {
+  to { transform: rotate(360deg); }
+}
+.animate-upload-spin {
+  animation: upload-spin 0.8s linear infinite;
+}
+
+/* Float (éléments décoratifs) */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-10px); }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Pulse doux */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.7; }
+}
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* Bounce doux */
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+.animate-bounce-soft {
+  animation: bounce-soft 2s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════
+   UTILITAIRES TEXT
+   ═══════════════════════════════════════════ */
 .line-clamp-1 {
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -160,10 +286,19 @@ body {
   overflow: hidden;
 }
 
-/* Scrollbar styling */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLLBAR STYLING
+   ═══════════════════════════════════════════ */
 ::-webkit-scrollbar {
   width: 6px;
-  height: 6px;            /* ✅ NOUVEAU : scrollbar horizontale (tableaux Dashboard PC) */
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -171,62 +306,49 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #DDE8E2;
+  background: var(--border-color);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #8AADA0;
+  background: var(--text-secondary);
 }
 
-/* Selection color */
-::selection {
-  background: #0C6B4E;
-  color: white;
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
 }
 
 /* ═══════════════════════════════════════════
-   RESPONSIVE MOBILE + PC
+   SELECTION
    ═══════════════════════════════════════════ */
-
-@media (max-width: 768px) {
-  .mobile-hide {
-    display: none;
-  }
-
-  /* ✅ NOUVEAU : grille produits — 2 colonnes mobile (au lieu de 5 comme sur grand écran) */
-  .grid-cols-5 {
-    grid-template-columns: repeat(2, 1fr);
-  }
+::selection {
+  background: var(--accent-primary);
+  color: var(--text-light);
 }
 
-@media (max-width: 480px) {
-  .mobile-stack {
-    flex-direction: column;
-  }
-
-  .mobile-full {
-    width: 100%;
-  }
-
-  /* ✅ NOUVEAU : padding réduit sur très petits écrans */
-  body {
-    font-size: 14px;
-  }
+::-moz-selection {
+  background: var(--accent-primary);
+  color: var(--text-light);
 }
 
-/* Smooth scrolling */
+/* ═══════════════════════════════════════════
+   HTML & SCROLL
+   ═══════════════════════════════════════════ */
 html {
   scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Touch-friendly tap targets */
+/* ═══════════════════════════════════════════
+   TOUCH-FRIENDLY
+   ═══════════════════════════════════════════ */
 button, a, input, select, textarea {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ✅ NOUVEAU : bloque le zoom iOS sur tous les champs (sinon le clavier zoome toute la page) */
+/* ✅ Empêche le zoom iOS sur les champs de formulaire */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -239,14 +361,121 @@ textarea {
   font-size: 16px;
 }
 
-/* ✅ NOUVEAU : safe area pour iPhone avec encoche (notch) */
+/* ═══════════════════════════════════════════
+   SAFE AREA (iPhone avec encoche)
+   ═══════════════════════════════════════════ */
 @supports (padding: env(safe-area-inset-top)) {
   body {
     padding-bottom: env(safe-area-inset-bottom);
   }
+  .safe-area-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
 }
 
-/* ✅ NOUVEAU : animation hover pour les "boutons caméra" du composant Avatar */
+/* ═══════════════════════════════════════════
+   ACCESSIBILITÉ — FOCUS VISIBLE
+   ═══════════════════════════════════════════ */
+*:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════
+   RÉDUCTION DES ANIMATIONS
+   ═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   SCROLLBAR HIDE (catégories)
+   ═══════════════════════════════════════════ */
+.scrollbar-hide::-webkit-scrollbar { 
+  display: none; 
+}
+.scrollbar-hide { 
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+
+/* Mobile (< 768px) */
+@media (max-width: 768px) {
+  .mobile-hide {
+    display: none !important;
+  }
+  
+  .mobile-stack {
+    flex-direction: column;
+  }
+  
+  .mobile-full {
+    width: 100%;
+  }
+  
+  /* ✅ Grille produits — 2 colonnes sur mobile */
+  .grid-cols-5 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Très petit écran (< 480px) */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .xs-hide {
+    display: none !important;
+  }
+  
+  .xs-full {
+    width: 100% !important;
+  }
+  
+  .xs-text-center {
+    text-align: center !important;
+  }
+}
+
+/* ✅ Breakpoint xs personnalisé (480px) */
+@media (min-width: 480px) {
+  .xs\:inline {
+    display: inline !important;
+  }
+  .xs\:block {
+    display: block !important;
+  }
+  .xs\:hidden {
+    display: none !important;
+  }
+}
+
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .tablet-hide {
+    display: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   COMPOSANTS SPÉCIFIQUES
+   ═══════════════════════════════════════════ */
+
+/* Avatar upload button */
 button[title="Changer la photo"] {
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
@@ -254,25 +483,34 @@ button[title="Changer la photo"]:hover {
   transform: scale(1.1);
 }
 
-/* ✅ NOUVEAU : accessibilité — focus visible pour la navigation clavier */
-*:focus-visible {
-  outline: 2px solid #0C6B4E;
-  outline-offset: 2px;
-  border-radius: 4px;
+/* Product Card hover */
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px var(--shadow-color);
 }
 
-/* ✅ NOUVEAU : préférence "réduire les animations" → respecte l'utilisateur */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
+/* Cart badge pulse */
+.cart-badge {
+  animation: pulse-soft 2s ease-in-out infinite;
 }
-/* ✅ NOUVEAU : masquer scrollbar sur la barre de catégories */
-.scrollbar-hide::-webkit-scrollbar { display: none; }
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ✅ NOUVEAU : breakpoint xs personnalisé (480px) — pour afficher "AgroAfrica" sur petits écrans */
-@media (min-width: 480px) {
-  .xs\:inline { display: inline; }
+/* Loading skeleton */
+.skeleton {
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-card) 50%, var(--bg-secondary) 75%);
+  background-size: 200% 100%;
+}
+
+/* ═══════════════════════════════════════════
+   DARK MODE OVERRIDES (spécifiques)
+   ═══════════════════════════════════════════ */
+[data-theme="dark"] .skeleton {
+  background: var(--bg-secondary);
+  background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-card) 50%, var(--bg-secondary) 75%);
+  background-size: 200% 100%;
 }
