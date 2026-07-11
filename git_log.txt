@@ -1,0 +1,3 @@
+a73fd88c fix: clean install without vercel package to fix Vercel build exit code 126
+e443cf2c fix: remove vercel CLI from devDependencies to fix build exit code 126
+4fac93b6 fix: seed script, SPA routing, axios 429/devLog, healthApi, redux-persist
