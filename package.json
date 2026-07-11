@@ -23,8 +23,7 @@
     "clean": "rm -rf dist node_modules/.vite",
     "seed": "node scripts/seedDatabase.js",
     "seed:local": "API_BASE_URL=http://localhost:5000/api node scripts/seedDatabase.js",
-    "preview:vercel": "vercel --prod",
-    "deploy": "npm run build && npm run preview:vercel",
+    "deploy": "npm run build",
     "analyze": "vite build --mode analyze"
   },
   "dependencies": {
