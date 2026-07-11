@@ -1,0 +1,5 @@
+## main...origin/main
+?? final_status.txt
+?? log_check.txt
+?? node_modules/
+?? status_check.txt
