@@ -5,20 +5,10 @@ const STORAGE_KEY = 'agro-theme'
 const THEMES = {
   LIGHT: 'light',
   DARK: 'dark',
-} as const
-
-// ✅ Types (si vous utilisez TypeScript, décommentez)
-// type Theme = typeof THEMES[keyof typeof THEMES]
-// type ThemeContextType = {
-//   theme: Theme
-//   toggleTheme: () => void
-//   setTheme: (theme: Theme) => void
-//   isDark: boolean
-//   isLight: boolean
-// }
+}
 
 // ✅ Fonction pour récupérer le thème initial
-const getInitialTheme = (): 'light' | 'dark' => {
+const getInitialTheme = () => {
   // 1. Vérifier si nous sommes dans un navigateur
   if (typeof window === 'undefined') return 'light'
 
@@ -36,12 +26,12 @@ const getInitialTheme = (): 'light' | 'dark' => {
 }
 
 // ✅ Écouter les changements de thème système
-const subscribeToSystemTheme = (callback: (theme: 'light' | 'dark') => void) => {
+const subscribeToSystemTheme = (callback) => {
   if (typeof window === 'undefined') return () => {}
 
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
   
-  const handler = (e: MediaQueryListEvent) => {
+  const handler = (e) => {
     callback(e.matches ? 'dark' : 'light')
   }
   
@@ -58,9 +48,9 @@ const subscribeToSystemTheme = (callback: (theme: 'light' | 'dark') => void) => 
 
 // ✅ Création du contexte avec une valeur par défaut
 const ThemeContext = createContext({
-  theme: 'light' as 'light' | 'dark',
+  theme: 'light',
   toggleTheme: () => {},
-  setTheme: (_theme: 'light' | 'dark') => {},
+  setTheme: (_theme) => {},
   isDark: false,
   isLight: true,
 })
@@ -70,7 +60,7 @@ export const ThemeProvider = ({
   defaultTheme = 'light',
   enableSystem = true,
 }) => {
-  const [theme, setThemeState] = useState<'light' | 'dark'>(defaultTheme)
+  const [theme, setThemeState] = useState(defaultTheme)
   const [isMounted, setIsMounted] = useState(false)
 
   // ✅ Initialisation du thème
@@ -116,7 +106,7 @@ export const ThemeProvider = ({
   }, [theme, isMounted])
 
   // ✅ Définir un thème spécifique
-  const setTheme = useCallback((newTheme: 'light' | 'dark') => {
+  const setTheme = useCallback((newTheme) => {
     setThemeState(newTheme)
   }, [])
 
@@ -199,4 +189,3 @@ export const ThemeToggle = ({ className = '' }) => {
 }
 
 export default ThemeProvider
-
