@@ -24,7 +24,8 @@
     "seed": "node scripts/seedDatabase.js",
     "seed:local": "API_BASE_URL=http://localhost:5000/api node scripts/seedDatabase.js",
     "deploy": "npm run build",
-    "analyze": "vite build --mode analyze"
+    "analyze": "vite build --mode analyze",
+    "postinstall": "node scripts/fixNodeBinPermissions.mjs"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
