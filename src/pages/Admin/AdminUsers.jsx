@@ -1,4 +1,3 @@
-=====================================================================
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { 
   Search, Ban, CheckCircle, Trash2, Users, 
